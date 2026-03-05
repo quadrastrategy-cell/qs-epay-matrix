@@ -8,7 +8,55 @@ st.set_page_config(
     page_icon="📊",
     layout="centered"
 )
-
+# ==========================================
+# 💡 KPMG 級別頂級管顧視覺化設定 (CSS 注入)
+# ==========================================
+st.markdown("""
+    <style>
+    /* 1. 全局字體與背景微調 */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    
+    /* 2. KPMG 權威深藍標題 */
+    h1, h2, h3 {
+        color: #00338D !important;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-weight: 700;
+    }
+    
+    /* 3. 銳利化跳轉按鈕 (st.link_button) */
+    .stLinkButton > a {
+        background-color: #00338D !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 2px !important; /* 管顧菁英風的微銳角 */
+        padding: 0.6rem 1.2rem !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: block;
+    }
+    
+    /* 按鈕懸停效果 (Hover) 變成亮藍色 */
+    .stLinkButton > a:hover {
+        background-color: #0091DA !important;
+        box-shadow: 0 4px 6px rgba(0, 51, 141, 0.2);
+    }
+    
+    /* 4. 側邊欄高質感底色 */
+    [data-testid="stSidebar"] {
+        background-color: #F8F9FA;
+        border-right: 1px solid #EBEBEB;
+    }
+    
+    /* 側邊欄內的字體顏色 */
+    [data-testid="stSidebar"] h1 {
+        color: #00338D !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 # ==========================================
 # 2. 側邊欄 (Sidebar) - 資料夾導覽與創辦人署名
 # ==========================================
