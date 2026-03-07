@@ -5,7 +5,7 @@ import pandas as pd
 # ==========================================
 # 1. 全局設定與 KPMG 級極簡視覺規範
 # ==========================================
-st.set_page_config(page_title="QS 商業決策智庫 | 數位金融戰略矩陣", layout="wide", page_icon="♟️")
+st.set_page_config(page_title="QS 象限戰略 | 商業痛點戰略矩陣", layout="wide", page_icon="♟️")
 
 # 視覺底線：白底、黑字、權威深藍標題 (#003366)、隱藏預設干擾
 st.markdown("""
@@ -27,7 +27,8 @@ st.markdown("""
 # 2. 側邊欄 (Sidebar)：戰略控制台與動態收銀台
 # ==========================================
 with st.sidebar:
-    st.markdown("<h3>QS 象限戰略智庫</h3>", unsafe_allow_html=True)
+    st.markdown("<h3>QS 象限戰略</h3>", unsafe_allow_html=True)
+    st.sidebar.caption("By HUACHIAO GROUP 樺蕎顧問團隊")
     st.write("---")
     
     # 父層級設計：電子支付戰場
