@@ -73,7 +73,7 @@ with st.sidebar:
     st.markdown("#### ⚡ 獲取完整決策報告")
     
     # 收銀台邏輯 1：單看 LINE Pay 的人，給他 $599，順便問他要不要升級
-    if target_platform == "LINE Pay":
+    if "LINE Pay" in target_platform:
         pricing_tier = st.radio("選擇授權方案：", ["單一戰區分析 ($599)", "升級電支三強 終極包 ($1499)"])
         if "$599" in pricing_tier:
             st.markdown("<h2 style='color: #003366; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
@@ -106,7 +106,7 @@ with st.sidebar:
 # ==========================================
 
 # 模組 A：LINE Pay 基礎版主畫面
-if target_platform == "LINE Pay":
+if "LINE Pay" in target_platform:
     st.markdown("<h1>LINE Pay 2026 Q2 商業痛點戰略矩陣</h1>", unsafe_allow_html=True)
     st.markdown("<div class='legal-warning'><b>⚖️ 智庫合規與抽樣限制聲明：</b> 本矩陣僅代表特定期間內，經 QS 象限戰略演算法於公開網路抽樣之消費者情緒量化結果，不構成對任何品牌或產品之全面性評價與指控。所有洞察僅供企業內部產品改進參考。</div>", unsafe_allow_html=True)
     
