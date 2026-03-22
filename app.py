@@ -117,7 +117,7 @@ with st.sidebar:
         st.button("🔒 尚未開放", disabled=True, use_container_width=True)
 
     # 【修正：支援 Google Pay / Apple Pay】 標章更精準
-    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>Apple Pay / 信用卡結帳後 3 秒自動發送至信箱</div>", unsafe_allow_html=True)
+    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>結帳後 3 秒自動發送至信箱</div>", unsafe_allow_html=True)
 
     st.write("---")
     st.markdown("<p style='font-size: 11px; color: #666; line-height: 1.5;'>© 2026 HUACHIAO GROUP 樺蕎顧問團隊. All rights reserved.</p>", unsafe_allow_html=True)
