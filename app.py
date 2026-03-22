@@ -4,11 +4,11 @@ import pandas as pd
 import numpy as np
 
 # ==========================================
-# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 終極版)
+# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 終極除蟲版)
 # ==========================================
 st.set_page_config(page_title="QS 象限戰略 | 頂級商業情報雷達", layout="wide", page_icon="♟️")
 
-# 注入黑卡級別 CSS - 包含所有選單防護與浮動視窗修正
+# 注入黑卡級別 CSS - 包含核彈級選單防護
 st.markdown("""
     <style>
     /* 核心背景與字體 */
@@ -21,23 +21,27 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* 🛡️ 側邊欄與下拉選單的終極防護 */
+    /* 🛡️ 側邊欄防護 */
     [data-testid="stSidebar"] {background-color: #121212; border-right: 1px solid #333333;}
     
     /* 針對選單外框與未展開的文字 */
     div[data-baseweb="select"] > div {background-color: #262626 !important; color: #BF953F !important; border-color: #333333 !important;}
     div[data-testid="stSelectbox"] label {color: #EBEBEB !important; font-weight: 700;}
     
-    /* 🛡️ 浮動選單 (Popover) 鬼剃頭修正：強制黑底金字 */
-    div[data-baseweb="popover"] > div,
-    ul[role="listbox"] {
+    /* ☢️ 【核彈級修正】強制貫穿所有浮動選單 (Popover/Menu) 的底層標籤 */
+    div[data-baseweb="popover"], 
+    div[data-baseweb="popover"] > div, 
+    div[data-baseweb="menu"], 
+    ul[role="listbox"], 
+    li[role="option"] {
         background-color: #1A1A1A !important;
-    }
-    ul[role="listbox"] li {
         color: #BF953F !important;
-        background-color: #1A1A1A !important;
     }
-    ul[role="listbox"] li:hover {
+    
+    /* 游標滑過去與選取時的 Hover 效果 */
+    li[role="option"]:hover, 
+    li[role="option"]:focus, 
+    li[aria-selected="true"] {
         background-color: #333333 !important;
         color: #FFFFFF !important;
     }
@@ -78,7 +82,6 @@ with st.sidebar:
     
     if market_sector == "電子支付戰場":
         st.markdown("#### 📱 電子支付標的")
-        # 👑 三大陣營全數解鎖，1499 穩坐旗艦位
         target_platform = st.selectbox(
             "選擇分析標的 (2026 Q2)：",
             (
@@ -105,7 +108,6 @@ with st.sidebar:
     st.markdown("#### ⚡ 獲取完整決策報告")
     st.markdown("<div class='discount-warning'>⚠️ 早鳥 8 折僅限前 10 名。點擊下方按鈕後，請務必在結帳頁面確認最終顯示金額為 8 折價再付款。</div>", unsafe_allow_html=True)
     
-    # 判斷選擇的平台，給予對應的 Gumroad 結帳連結
     if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
         st.info("當前標的：電支三強宏觀對標矩陣 (全 9 頁)")
         st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 1499</h2>", unsafe_allow_html=True)
@@ -141,7 +143,6 @@ with st.sidebar:
 
 st.markdown("<div class='legal-warning'><b>⚖️ 智庫合規與抽樣限制聲明：</b> 本矩陣為 QS 象限戰略演算法於公開網路抽樣之消費者情緒量化結果，全數文本皆經向量化與主題聚合處理，無法回推原始個資。拒絕主觀通靈，只用底層數據說話。</div>", unsafe_allow_html=True)
 
-# 🏆 旗艦：$1499 終極包
 if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
     st.markdown("<h1>🏆 台灣電支三強：終極防禦與痛點對標矩陣</h1>", unsafe_allow_html=True)
     st.markdown("""
@@ -158,13 +159,11 @@ if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
     col3.metric("🔵 全支付 最大流失節點", "🔒 解鎖報告獲取座標", "高度隱匿", delta_color="off")
     st.write("---")
 
-# 模組 B：各別 599 戰術包 (專業矩陣圖表)
 elif "戰術包" in target_platform:
     brand_name = target_platform.split(" ")[1] 
     st.markdown(f"<h1>{brand_name} 2026 Q2 商業痛點戰略矩陣</h1>", unsafe_allow_html=True)
     
     bait_text = ""
-    # 根據不同品牌編寫專屬專業 Placeholder 數據
     if brand_name == "LINE":
         bait_text = "模型偵測到大量「登入_重新_密碼」落於極度痛點區。驗證了 <b>Onboarding 死亡漏斗</b> 是目前新戶首刷 GMV 歸零的核心死因。"
         labels = ["【解密】Onboarding死亡區", "戰區 Beta ( blindspot )", "戰區 Gamma (On-Hold)", "戰區 Delta (競品共業)", "戰區 Epsilon (延遲阻力)"]
@@ -216,7 +215,6 @@ elif "戰術包" in target_platform:
     )
     st.plotly_chart(fig1, use_container_width=True)
 
-# 模組 C：建置中
 else:
     st.markdown(f"<h1>{target_platform}</h1>", unsafe_allow_html=True)
     st.write("---")
