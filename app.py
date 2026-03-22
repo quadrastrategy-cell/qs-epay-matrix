@@ -4,11 +4,11 @@ import pandas as pd
 import numpy as np
 
 # ==========================================
-# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 2.0 版)
+# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 終極版)
 # ==========================================
 st.set_page_config(page_title="QS 象限戰略 | 頂級商業情報雷達", layout="wide", page_icon="♟️")
 
-# 注入黑卡級別 CSS - 針對 deployed 版本特別優化側邊欄選單
+# 注入黑卡級別 CSS - 包含所有選單防護與浮動視窗修正
 st.markdown("""
     <style>
     /* 核心背景與字體 */
@@ -21,12 +21,26 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* 🛡️ 【修正：側邊欄選單不可見】 強制選單樣式 */
+    /* 🛡️ 側邊欄與下拉選單的終極防護 */
     [data-testid="stSidebar"] {background-color: #121212; border-right: 1px solid #333333;}
     
-    /* 強制修改 selectbox 的 Label, Input, Value, Dropdown 字體顏色 */
-    div[data-baseweb="select"] > div {background-color: #262626 !important; color: #BF953F !important;}
+    /* 針對選單外框與未展開的文字 */
+    div[data-baseweb="select"] > div {background-color: #262626 !important; color: #BF953F !important; border-color: #333333 !important;}
     div[data-testid="stSelectbox"] label {color: #EBEBEB !important; font-weight: 700;}
+    
+    /* 🛡️ 浮動選單 (Popover) 鬼剃頭修正：強制黑底金字 */
+    div[data-baseweb="popover"] > div,
+    ul[role="listbox"] {
+        background-color: #1A1A1A !important;
+    }
+    ul[role="listbox"] li {
+        color: #BF953F !important;
+        background-color: #1A1A1A !important;
+    }
+    ul[role="listbox"] li:hover {
+        background-color: #333333 !important;
+        color: #FFFFFF !important;
+    }
     
     /* 數據面板 (Metric) 黑金化 */
     div[data-testid="metric-container"] {border-left: 4px solid #BF953F; padding: 10px 15px; background-color: #1A1A1A; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.5);}
@@ -40,14 +54,14 @@ st.markdown("""
     .bait-box {background-color: #1F1505; border-left: 4px solid #BF953F; padding: 16px; margin-bottom: 25px; border-radius: 0 6px 6px 0;}
     .bait-title {color: #BF953F; font-weight: 800; font-size: 15px; margin-bottom: 6px;}
     
-    /* ⚠️ 【新增：早鳥風險提示】 */
+    /* ⚠️ 坑人防呆提示 */
     .discount-warning {font-size: 12px; color: #BF953F; background-color: #1A1A1A; padding: 8px; border-radius: 4px; border: 1px solid #BF953F; margin-bottom: 10px; text-align: center; font-weight: 700;}
     
     </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄 (Sidebar)：全線解鎖與早鳥直通收銀台 (新增風險提示)
+# 2. 側邊欄 (Sidebar)：全線解鎖與早鳥直通收銀台
 # ==========================================
 with st.sidebar:
     st.markdown("<h3>QS 象限戰略</h3>", unsafe_allow_html=True)
@@ -87,11 +101,11 @@ with st.sidebar:
     
     st.write("---")
     
-    # 💰 動態收銀台 (導入 QS2026EARLY 早鳥無腦直通連結，並加上坑人防呆提示)
+    # 💰 動態收銀台 
     st.markdown("#### ⚡ 獲取完整決策報告")
     st.markdown("<div class='discount-warning'>⚠️ 早鳥 8 折僅限前 10 名。點擊下方按鈕後，請務必在結帳頁面確認最終顯示金額為 8 折價再付款。</div>", unsafe_allow_html=True)
     
-    # 判斷選擇的平台，給予對應的 Gumroad 結帳連結 (直接加上 /QS2026EARLY)
+    # 判斷選擇的平台，給予對應的 Gumroad 結帳連結
     if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
         st.info("當前標的：電支三強宏觀對標矩陣 (全 9 頁)")
         st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 1499</h2>", unsafe_allow_html=True)
@@ -116,8 +130,7 @@ with st.sidebar:
         st.warning(f"該產業情報模型建置中。")
         st.button("🔒 尚未開放", disabled=True, use_container_width=True)
 
-    # 【修正：支援 Google Pay / Apple Pay】 標章更精準
-    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>結帳後 3 秒自動發送至信箱</div>", unsafe_allow_html=True)
+    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>結帳後 3 秒自動發送企業級浮水印 PDF 至信箱</div>", unsafe_allow_html=True)
 
     st.write("---")
     st.markdown("<p style='font-size: 11px; color: #666; line-height: 1.5;'>© 2026 HUACHIAO GROUP 樺蕎顧問團隊. All rights reserved.</p>", unsafe_allow_html=True)
@@ -145,13 +158,13 @@ if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
     col3.metric("🔵 全支付 最大流失節點", "🔒 解鎖報告獲取座標", "高度隱匿", delta_color="off")
     st.write("---")
 
-# 模組 B：各別 599 戰術包 (🛡️ 【修正：不同競品不同數據，杜絕圖片感】)
+# 模組 B：各別 599 戰術包 (專業矩陣圖表)
 elif "戰術包" in target_platform:
     brand_name = target_platform.split(" ")[1] 
     st.markdown(f"<h1>{brand_name} 2026 Q2 商業痛點戰略矩陣</h1>", unsafe_allow_html=True)
     
     bait_text = ""
-    # 根據不同品牌編寫專屬專業 Placeholder 數據 (真實專業感)
+    # 根據不同品牌編寫專屬專業 Placeholder 數據
     if brand_name == "LINE":
         bait_text = "模型偵測到大量「登入_重新_密碼」落於極度痛點區。驗證了 <b>Onboarding 死亡漏斗</b> 是目前新戶首刷 GMV 歸零的核心死因。"
         labels = ["【解密】Onboarding死亡區", "戰區 Beta ( blindspot )", "戰區 Gamma (On-Hold)", "戰區 Delta (競品共業)", "戰區 Epsilon (延遲阻力)"]
@@ -183,30 +196,27 @@ elif "戰術包" in target_platform:
     col3.metric("底層優化座標 (Sprint)", "🔒 解鎖獲取", "10頁濃縮", delta_color="off")
     st.write("---")
 
-    # 繪製真實專業版散佈圖 (盾牌等級修復)
     df_pro = pd.DataFrame({
         "戰場標籤": labels,
         "聲量熱度 (討論量)": 討論量,
         "情緒滿意度": 情緒,
-        "商業影響力 (Impact)": np.random.randint(6, 11, 5) # 生成真實隨機影響力
+        "商業影響力 (Impact)": np.random.randint(6, 11, 5) 
     })
 
     fig1 = px.scatter(df_pro, x="情緒滿意度", y="聲量熱度 (討論量)", text="戰場標籤", size="聲量熱度 (討論量)", color="情緒滿意度", color_continuous_scale=["#B30000", "#BF953F", "#FFFFFF"], title=f"{brand_name} 服務落點與情緒分析 (越往左越痛)")
     fig1.update_traces(textposition='top center')
     
-    # 🛡️ 【修正：標題正位、關閉網格清晰版】
     fig1.update_layout(
         template="plotly_dark", 
         plot_bgcolor='rgba(0,0,0,0)', 
         paper_bgcolor='rgba(0,0,0,0)', 
         coloraxis_showscale=False,
-        # 標題強制水平且正位
         yaxis=dict(title=dict(standoff=15), ticksuffix=" ", showgrid=False),
         xaxis=dict(showgrid=False)
     )
     st.plotly_chart(fig1, use_container_width=True)
 
-# 建置中
+# 模組 C：建置中
 else:
     st.markdown(f"<h1>{target_platform}</h1>", unsafe_allow_html=True)
     st.write("---")
