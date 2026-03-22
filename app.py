@@ -3,37 +3,46 @@ import plotly.express as px
 import pandas as pd
 
 # ==========================================
-# 1. 全局設定與極簡視覺規範 (重裝防禦版)
+# 1. 全局設定與頂級智庫視覺規範 (黑金曜石版)
 # ==========================================
-st.set_page_config(page_title="QS 象限戰略 | 商業痛點戰略矩陣", layout="wide", page_icon="♟️")
+st.set_page_config(page_title="QS 象限戰略 | 頂級商業情報雷達", layout="wide", page_icon="♟️")
 
+# 注入黑卡級別 CSS
 st.markdown("""
     <style>
-    .stApp {background-color: #FFFFFF;}
-    h1 {color: #003366 !important; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 900; letter-spacing: -0.5px;}
-    h2, h3, h4 {color: #003366 !important; font-weight: 700;}
-    p, span, div, label {color: #333333;}
+    /* 核心背景與字體 */
+    .stApp {background-color: #0A0A0A;}
+    h1, h2, h3 {color: #BF953F !important; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 900; letter-spacing: 1px;}
+    h4, p, span, div, label, li {color: #EBEBEB;}
+    
+    /* 隱藏系統預設選單 */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    [data-testid="stSidebar"] {background-color: #F8F9FA; border-right: 1px solid #EBEBEB;}
-    div[data-testid="metric-container"] {border-left: 4px solid #003366; padding: 10px 15px; background-color: #FFFFFF; border: 1px solid #EEEEEE; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);}
+    /* 側邊欄精緻化 */
+    [data-testid="stSidebar"] {background-color: #121212; border-right: 1px solid #333333;}
     
-    .trust-badge {font-size: 11px; color: #666; text-align: center; margin-top: 5px; margin-bottom: 15px; padding: 8px; background-color: #F0F2F6; border-radius: 4px;}
-    .legal-warning {background-color: #F8F9FA; color: #555; padding: 12px 16px; border-left: 4px solid #6C757D; font-size: 12px; margin-bottom: 20px; line-height: 1.6;}
-    .methodology-box {background-color: #F4F8FC; border: 1px solid #D6E4F0; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px;}
-    .bait-box {background-color: #F4F6F9; border-left: 4px solid #B30000; padding: 16px; margin-bottom: 25px; border-radius: 0 6px 6px 0;}
-    .bait-title {color: #B30000; font-weight: 800; font-size: 15px; margin-bottom: 6px;}
+    /* 數據面板 (Metric) 黑金化 */
+    div[data-testid="metric-container"] {border-left: 4px solid #BF953F; padding: 10px 15px; background-color: #1A1A1A; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.5);}
+    div[data-testid="stMetricValue"] {color: #FFFFFF !important;}
+    
+    /* 信任標章與合規聲明 */
+    .trust-badge {font-size: 11px; color: #888; text-align: center; margin-top: 5px; margin-bottom: 15px; padding: 8px; background-color: #1A1A1A; border-radius: 4px; border: 1px solid #333;}
+    .legal-warning {background-color: #1A1A1A; color: #888; padding: 12px 16px; border-left: 4px solid #555; font-size: 12px; margin-bottom: 20px; line-height: 1.6;}
+    
+    /* 戰略誘餌區塊 (Bait Box) */
+    .bait-box {background-color: #1F1505; border-left: 4px solid #BF953F; padding: 16px; margin-bottom: 25px; border-radius: 0 6px 6px 0;}
+    .bait-title {color: #BF953F; font-weight: 800; font-size: 15px; margin-bottom: 6px;}
     </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄 (Sidebar)：雙層級路由與動態收銀台
+# 2. 側邊欄 (Sidebar)：全線解鎖與早鳥直通收銀台
 # ==========================================
 with st.sidebar:
     st.markdown("<h3>QS 象限戰略</h3>", unsafe_allow_html=True)
-    st.caption("By HUACHIAO GROUP 樺蕎顧問團隊")
+    st.caption("HUACHIAO GROUP 樺蕎顧問團隊")
     st.write("---")
     
     st.markdown("#### 📂 戰略情報板塊")
@@ -46,14 +55,14 @@ with st.sidebar:
     
     if market_sector == "電子支付戰場":
         st.markdown("#### 📱 電子支付標的")
-        # 👑 實裝 CEO 戰略：將 $1499 終極包拉上第一線當作旗艦選項
+        # 👑 三大陣營全數解鎖，1499 穩坐旗艦位
         target_platform = st.selectbox(
-            "選擇分析標的：",
+            "選擇分析標的 (2026 Q2)：",
             (
                 "🏆 台灣電支三強 終極包 ($1499)", 
-                "LINE Pay ($599)",
-                "街口支付 ($599-即將解鎖)", 
-                "全支付 ($599-即將解鎖)"
+                "🟢 LINE Pay 戰術包 ($599)",
+                "🔴 街口支付 戰術包 ($599)", 
+                "🔵 全支付 戰術包 ($599)"
             )
         )
     else:
@@ -63,108 +72,113 @@ with st.sidebar:
             (
                 "王品集團 (連鎖餐飲情報) - [運算中]",
                 "星巴克/路易莎 (連鎖咖啡情報) - [運算中]",
-                "UberEats (外送生活) - [運算中]",
-                "Tinder (交友軟體) - [運算中]"
+                "UberEats (外送生活) - [運算中]"
             )
         )
     
     st.write("---")
     
+    # 💰 動態收銀台 (導入 QS2026EARLY 早鳥無腦直通連結)
     st.markdown("#### ⚡ 獲取完整決策報告")
     
-    # 收銀台邏輯 1：單看 LINE Pay 的人，給他 $599，順便問他要不要升級
-    if "LINE Pay" in target_platform:
-        pricing_tier = st.radio("選擇授權方案：", ["單一戰區分析 ($599)", "升級電支三強 終極包 ($1499)"])
-        if "$599" in pricing_tier:
-            st.markdown("<h2 style='color: #003366; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
-            st.link_button("💳 立即獲取 (LINE Pay 戰術包)", "https://quadrastrategy.gumroad.com/l/epay-line-2026", type="primary", use_container_width=True)
-        else:
-            st.markdown("<h2 style='color: #B30000; margin-top: -10px; margin-bottom: 5px;'>$ 1499</h2>", unsafe_allow_html=True)
-            st.link_button("💳 立即獲取 (電支三強終極包)", "https://quadrastrategy.gumroad.com/l/epay-bundle-2026", type="primary", use_container_width=True)
-        st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 256-bit SSL 加密<br>Apple Pay / 信用卡結帳後 3 秒自動發送</div>", unsafe_allow_html=True)
+    # 判斷選擇的平台，給予對應的 Gumroad 結帳連結
+    if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
+        st.info("當前標的：電支三強宏觀對標矩陣 (全 9 頁)")
+        st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 1499</h2>", unsafe_allow_html=True)
+        # 結帳網址後方直接加上 /QS2026EARLY
+        st.link_button("💳 獲取終極包 (前 10 名自動享早鳥 8 折)", "https://quadrastrategy.gumroad.com/l/epay-bundle-2026Q2/QS2026EARLY", type="primary", use_container_width=True)
+        
+    elif target_platform == "🟢 LINE Pay 戰術包 ($599)":
+        st.info("當前標的：LINE 生態系流失斷點報告 (全 10 頁)")
+        st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
+        st.link_button("💳 獲取 LINE Pay 戰術包 (自動帶入 8 折)", "https://quadrastrategy.gumroad.com/l/epay-line-2026Q2/QS2026EARLY", type="primary", use_container_width=True)
 
-    # 收銀台邏輯 2：直接點選 1499 旗艦包的人，直接鎖死 $1499 收銀台
-    elif target_platform == "🏆 台灣電支三強 終極包 ($1499)":
-        st.info("當前標的：電支三強終極防禦包")
-        st.markdown("<h2 style='color: #B30000; margin-top: -10px; margin-bottom: 5px;'>$ 1499</h2>", unsafe_allow_html=True)
-        st.caption("內含：LINE Pay, 街口, 全支付 三大陣營痛點對標與流失率盲區掃描。")
-        st.link_button("💳 立即獲取 (電支三強終極包)", "https://quadrastrategy.gumroad.com/l/epay-bundle-2026", type="primary", use_container_width=True)
-        st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 256-bit SSL 加密<br>Apple Pay / 信用卡結帳後 3 秒自動發送</div>", unsafe_allow_html=True)
+    elif target_platform == "🔴 街口支付 戰術包 ($599)":
+        st.info("當前標的：街口支付客訴迴圈報告 (全 10 頁)")
+        st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
+        st.link_button("💳 獲取 街口支付 戰術包 (自動帶入 8 折)", "https://quadrastrategy.gumroad.com/l/epay-jko-2026Q2/QS2026EARLY", type="primary", use_container_width=True)
+
+    elif target_platform == "🔵 全支付 戰術包 ($599)":
+        st.info("當前標的：全支付體驗落差報告 (全 10 頁)")
+        st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
+        st.link_button("💳 獲取 全支付 戰術包 (自動帶入 8 折)", "https://quadrastrategy.gumroad.com/l/epay-px-2026Q2/QS2026EARLY", type="primary", use_container_width=True)
     
     else:
         st.warning(f"該產業情報模型建置中。")
         st.button("🔒 尚未開放", disabled=True, use_container_width=True)
 
+    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 企業級專屬 PDF 浮水印機制<br>Apple Pay / 信用卡結帳後 3 秒自動發送至信箱</div>", unsafe_allow_html=True)
+
     st.write("---")
-    st.markdown("**Founders**")
-    st.caption("吳樺緯 (Hua-Wei Wu) \n\n吳蕎伊 (Chiao-Yi Wu)")
-    st.write("---")
-    st.markdown("<p style='font-size: 11px; color: #888; line-height: 1.5;'>© 2026 HUACHIAO GROUP 樺蕎顧問團隊. All rights reserved.<br>數據合規：本報告所有洞察均來自 QS 象限戰略開源聲量捕捉引擎，全數文本皆經向量化與主題聚合處理，無法回推原始個資。</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 11px; color: #666; line-height: 1.5;'>© 2026 HUACHIAO GROUP 樺蕎顧問團隊. All rights reserved.</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 3. 主畫面模組化動態載入
+# 3. 主畫面動態載入 (恐懼行銷火力展示)
 # ==========================================
 
-# 模組 A：LINE Pay 基礎版主畫面
-if "LINE Pay" in target_platform:
-    st.markdown("<h1>LINE Pay 2026 Q2 商業痛點戰略矩陣</h1>", unsafe_allow_html=True)
-    st.markdown("<div class='legal-warning'><b>⚖️ 智庫合規與抽樣限制聲明：</b> 本矩陣僅代表特定期間內，經 QS 象限戰略演算法於公開網路抽樣之消費者情緒量化結果，不構成對任何品牌或產品之全面性評價與指控。所有洞察僅供企業內部產品改進參考。</div>", unsafe_allow_html=True)
-    
+st.markdown("<div class='legal-warning'><b>⚖️ 智庫合規與抽樣限制聲明：</b> 本矩陣為 QS 象限戰略演算法於公開網路抽樣之消費者情緒量化結果，全數文本皆經向量化與主題聚合處理，無法回推原始個資。拒絕主觀通靈，只用底層數據說話。</div>", unsafe_allow_html=True)
+
+# 模組 A：$1499 終極包 (火力全開版)
+if target_platform == "🏆 台灣電支三強 終極包 ($1499)":
+    st.markdown("<h1>🏆 台灣電支三強：終極防禦與痛點對標矩陣</h1>", unsafe_allow_html=True)
     st.markdown("""
-        <div class='methodology-box'>
-        <b>🔬 QS 象限戰略數據煉丹爐 (Data Pipeline)：</b><br>
-        <code style='color:#003366;'>Raw Text -> Text Embedding -> BERTopic -> Sentiment Mapping -> Pain Matrix</code>
+        <div class='bait-box'>
+        <div class='bait-title'>🔥 終極情報預覽 (Cross-Platform Analysis)：</div>
+        透過三方矩陣疊加，我們發現<b>「跨境支付生態 API 延遲」</b>與<b>「逆向金流退款黑箱」</b>是決定 2026 年高淨值用戶跳槽率的兩大絕對關鍵。其中一方已在此戰場出現嚴重失血。解鎖全份 9 頁戰略報告，獲取完整競品弱點地圖。
         </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
+    st.write("### 📊 競品致命弱點交叉掃描 (預覽)")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🟢 LINE Pay 最大流失節點", "登入與 3D 驗證斷流", "已被鎖定", delta_color="inverse")
+    col2.metric("🔴 街口支付 最大流失節點", "🔒 解鎖報告獲取座標", "高度隱匿", delta_color="off")
+    col3.metric("🔵 全支付 最大流失節點", "🔒 解鎖報告獲取座標", "高度隱匿", delta_color="off")
+    st.write("---")
+
+# 模組 B：各別 599 戰術包 (動態切換)
+elif "戰術包" in target_platform:
+    # 動態抓取品牌名稱
+    brand_name = target_platform.split(" ")[1] 
+    
+    st.markdown(f"<h1>{brand_name} 2026 Q2 商業痛點戰略矩陣</h1>", unsafe_allow_html=True)
+    
+    # 根據不同品牌給予不同誘餌
+    bait_text = ""
+    if brand_name == "LINE":
+        bait_text = "模型偵測到大量「登入_重新_密碼」落於極度痛點區。驗證了 <b>Onboarding 死亡漏斗</b> 是目前新戶首刷 GMV 歸零的核心死因。"
+    elif brand_name == "街口支付":
+        bait_text = "模型偵測出「實體店與平台責任互踢」的強烈負面情緒。揭露了引發消保客訴暴增的 <b>資金凍結假象</b> 底層邏輯。"
+    elif brand_name == "全支付":
+        bait_text = "數據顯示高齡用戶在「換機與換門號」情境下遭遇極高數位門檻。這是導致線下門市癱瘓與 <b>資產凍結客訴</b> 的致命斷點。"
+
+    st.markdown(f"""
         <div class='bait-box'>
         <div class='bait-title'>💡 QS 象限戰略獨家洞察解密 (Sample)：</div>
-        模型偵測到大量「登入_重新_密碼」等關鍵字落於極度痛點區。驗證了 <b>Day 1 Churn (新手登入流失)</b> 是目前該平台最嚴重的基礎建設漏洞。
+        {bait_text}
         </div>
     """, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
-    col1.metric("預估 Day 1 Churn (新手流失率)", "18.5%", "高危險", delta_color="inverse")
-    col2.metric("潛在月度營收損耗 (核心流程)", "$ 2.4M NTD", "警戒", delta_color="inverse")
-    col3.metric("競品防禦力對標 (vs 街口)", "弱勢", "需優化 [隱匿]", delta_color="inverse")
+    col1.metric("預估核心流程中斷率", "高危險", "急需優化", delta_color="inverse")
+    col2.metric("潛在月度營收損耗", "警戒等級", "持續失血", delta_color="inverse")
+    col3.metric("底層優化座標 (Sprint)", "🔒 解鎖獲取", "10頁濃縮", delta_color="off")
     st.write("---")
 
+    # 繪製暗黑版散佈圖
     df_teaser = pd.DataFrame({
-        "戰場標籤": ["【解密】基礎流失 (登入)", "戰區 Beta (盲區)", "戰區 Gamma (警戒)", "戰區 Delta (共業)", "戰區 Epsilon (結帳中斷)"],
+        "戰場標籤": ["【解密】基礎流失區", "戰區 Beta (盲區)", "戰區 Gamma (警戒)", "戰區 Delta (共業)", "戰區 Epsilon (阻力)"],
         "聲量熱度 (討論量)": [68, 41, 52, 61, 44],
         "情緒滿意度": [-0.577, -0.408, -0.805, -0.938, -0.72],
         "商業影響力 (Impact)": [10, 7, 6, 9, 8]
     })
 
-    fig1 = px.scatter(df_teaser, x="情緒滿意度", y="聲量熱度 (討論量)", text="戰場標籤", size="聲量熱度 (討論量)", color="情緒滿意度", color_continuous_scale=["#B30000", "#CCCCCC", "#003366"], title="LINE Pay 服務落點與情緒分析 (越往左越痛)")
+    fig1 = px.scatter(df_teaser, x="情緒滿意度", y="聲量熱度 (討論量)", text="戰場標籤", size="聲量熱度 (討論量)", color="情緒滿意度", color_continuous_scale=["#B30000", "#BF953F", "#FFFFFF"], title=f"{brand_name} 服務落點與情緒分析 (越往左越痛)")
     fig1.update_traces(textposition='top center')
-    fig1.update_layout(plot_bgcolor='white', paper_bgcolor='white', coloraxis_showscale=False)
+    # 強制套用深色主題與透明背景
+    fig1.update_layout(template="plotly_dark", plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', coloraxis_showscale=False)
     st.plotly_chart(fig1, use_container_width=True)
 
-# 模組 B：$1499 終極包專屬主畫面 (火力展示版)
-elif target_platform == "🏆 台灣電支三強 終極包 ($1499)":
-    st.markdown("<h1>🏆 台灣電支三強：終極防禦與痛點對標矩陣</h1>", unsafe_allow_html=True)
-    st.markdown("<div class='legal-warning'><b>⚖️ 智庫合規與抽樣限制聲明：</b> 本矩陣包含 LINE Pay, 街口支付, 全支付 三大品牌之交叉比對，純屬 NLP 演算法量化結果，不構成企業營運評價。</div>", unsafe_allow_html=True)
-    
-    st.markdown("""
-        <div class='bait-box'>
-        <div class='bait-title'>🔥 終極情報預覽 (Cross-Platform Analysis)：</div>
-        透過三方矩陣疊加，我們發現<b>「跨境支付生態」</b>與<b>「點數折抵UI」</b>是決定 2026 年用戶跳槽率的兩大絕對關鍵。其中一方已在此戰場出現嚴重失血（情緒分數低於 -0.85）。解鎖報告獲取完整競品弱點地圖。
-        </div>
-    """, unsafe_allow_html=True)
-
-    # 針對三強設計的高階比較數據版塊
-    st.write("### 📊 競品致命弱點交叉掃描 (預覽)")
-    col1, col2, col3 = st.columns(3)
-    col1.metric("🟢 LINE Pay 最大流失節點", "登入驗證與換機", "已被鎖定", delta_color="inverse")
-    col2.metric("🔴 街口支付 最大流失節點", "🔒 解鎖完整報告", "高度隱匿", delta_color="off")
-    col3.metric("🔵 全支付 最大流失節點", "🔒 解鎖完整報告", "高度隱匿", delta_color="off")
-    st.write("---")
-    
-    st.info("💡 完整版包含：三方痛點座標全覆蓋疊加圖、跨平台 UI 體驗落差評估、行銷資源投放優先順序 (Impact x Effort Matrix) 等 30 頁高階分析。")
-
-# 模組 C：其他建置中平台
+# 模組 C：建置中
 else:
     st.markdown(f"<h1>{target_platform}</h1>", unsafe_allow_html=True)
     st.write("---")
