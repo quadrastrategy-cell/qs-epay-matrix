@@ -4,11 +4,10 @@ import pandas as pd
 import numpy as np
 
 # ==========================================
-# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 終極除蟲版)
+# 1. 全局設定與頂級智庫視覺規範 (黑金曜石 終極版)
 # ==========================================
 st.set_page_config(page_title="QS 象限戰略 | 頂級商業情報雷達", layout="wide", page_icon="♟️")
 
-# 注入黑卡級別 CSS - 包含核彈級選單防護
 st.markdown("""
     <style>
     /* 核心背景與字體 */
@@ -28,7 +27,7 @@ st.markdown("""
     div[data-baseweb="select"] > div {background-color: #262626 !important; color: #BF953F !important; border-color: #333333 !important;}
     div[data-testid="stSelectbox"] label {color: #EBEBEB !important; font-weight: 700;}
     
-    /* ☢️ 【核彈級修正】強制貫穿所有浮動選單 (Popover/Menu) 的底層標籤 */
+    /* ☢️ 強制貫穿所有浮動選單 (Popover/Menu) 的底層標籤 */
     div[data-baseweb="popover"], 
     div[data-baseweb="popover"] > div, 
     div[data-baseweb="menu"], 
@@ -51,7 +50,7 @@ st.markdown("""
     div[data-testid="stMetricValue"] {color: #FFFFFF !important;}
     
     /* 信任標章與合規聲明 */
-    .trust-badge {font-size: 11px; color: #888; text-align: center; margin-top: 5px; margin-bottom: 15px; padding: 8px; background-color: #1A1A1A; border-radius: 4px; border: 1px solid #333;}
+    .trust-badge {font-size: 11px; color: #888; text-align: center; margin-top: 5px; margin-bottom: 15px; padding: 10px; background-color: #1A1A1A; border-radius: 4px; border: 1px solid #333;}
     .legal-warning {background-color: #1A1A1A; color: #888; padding: 12px 16px; border-left: 4px solid #555; font-size: 12px; margin-bottom: 20px; line-height: 1.6;}
     
     /* 戰略誘餌區塊 (Bait Box) */
@@ -60,12 +59,11 @@ st.markdown("""
     
     /* ⚠️ 坑人防呆提示 */
     .discount-warning {font-size: 12px; color: #BF953F; background-color: #1A1A1A; padding: 8px; border-radius: 4px; border: 1px solid #BF953F; margin-bottom: 10px; text-align: center; font-weight: 700;}
-    
     </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄 (Sidebar)：全線解鎖與早鳥直通收銀台
+# 2. 側邊欄 (Sidebar)
 # ==========================================
 with st.sidebar:
     st.markdown("<h3>QS 象限戰略</h3>", unsafe_allow_html=True)
@@ -73,33 +71,20 @@ with st.sidebar:
     st.write("---")
     
     st.markdown("#### 📂 戰略情報板塊")
-    market_sector = st.radio(
-        "切換產業領域：",
-        ["電子支付戰場", "實體與大眾化情報庫"]
-    )
-    
+    market_sector = st.radio("切換產業領域：", ["電子支付戰場", "實體與大眾化情報庫"])
     st.markdown("<br>", unsafe_allow_html=True)
     
     if market_sector == "電子支付戰場":
         st.markdown("#### 📱 電子支付標的")
         target_platform = st.selectbox(
             "選擇分析標的 (2026 Q2)：",
-            (
-                "🏆 台灣電支三強 終極包 ($1499)", 
-                "🟢 LINE Pay 戰術包 ($599)",
-                "🔴 街口支付 戰術包 ($599)", 
-                "🔵 全支付 戰術包 ($599)"
-            )
+            ("🏆 台灣電支三強 終極包 ($1499)", "🟢 LINE Pay 戰術包 ($599)", "🔴 街口支付 戰術包 ($599)", "🔵 全支付 戰術包 ($599)")
         )
     else:
         st.markdown("#### 🌍 跨界情報標的")
         target_platform = st.selectbox(
             "選擇分析標的：",
-            (
-                "王品集團 (連鎖餐飲情報) - [運算中]",
-                "星巴克/路易莎 (連鎖咖啡情報) - [運算中]",
-                "UberEats (外送生活) - [運算中]"
-            )
+            ("王品集團 (連鎖餐飲情報) - [運算中]", "星巴克/路易莎 (連鎖咖啡情報) - [運算中]", "UberEats (外送生活) - [運算中]")
         )
     
     st.write("---")
@@ -127,12 +112,12 @@ with st.sidebar:
         st.info("當前標的：全支付體驗落差報告 (全 10 頁)")
         st.markdown("<h2 style='color: #BF953F; margin-top: -10px; margin-bottom: 5px;'>$ 599</h2>", unsafe_allow_html=True)
         st.link_button("💳 獲取 全支付 戰術包 (自動帶入 8 折)", "https://quadrastrategy.gumroad.com/l/epay-px-2026Q2/QS2026EARLY", type="primary", use_container_width=True)
-    
     else:
         st.warning(f"該產業情報模型建置中。")
         st.button("🔒 尚未開放", disabled=True, use_container_width=True)
 
-    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>結帳後 3 秒自動發送企業級浮水印 PDF 至信箱</div>", unsafe_allow_html=True)
+    # 🛡️ 加入海外手續費免責聲明
+    st.markdown("<div class='trust-badge'>🔒 國際金流 Gumroad 託管 | 支援 Google Pay / Apple Pay / 國際信用卡<br>結帳後 3 秒自動發送企業級浮水印 PDF 至信箱<br><br><span style='color: #666; font-size: 10px;'>※ 本智庫採用美國 Gumroad 企業級金流託管，結帳時您的發卡銀行可能會收取微幅海外交易手續費或產生匯差。</span></div>", unsafe_allow_html=True)
 
     st.write("---")
     st.markdown("<p style='font-size: 11px; color: #666; line-height: 1.5;'>© 2026 HUACHIAO GROUP 樺蕎顧問團隊. All rights reserved.</p>", unsafe_allow_html=True)
@@ -169,13 +154,11 @@ elif "戰術包" in target_platform:
         labels = ["【解密】Onboarding死亡區", "戰區 Beta ( blindspot )", "戰區 Gamma (On-Hold)", "戰區 Delta (競品共業)", "戰區 Epsilon (延遲阻力)"]
         討論量 = [68, 41, 52, 61, 44]
         情緒 = [-0.577, -0.408, -0.805, -0.938, -0.72]
-        
     elif brand_name == "街口支付":
         bait_text = "模型偵測出「實體店與平台責任互踢」的強烈負面情緒。揭露了引發消保客訴暴增的 <b>逆向金流黑箱</b> 底層邏輯。"
         labels = ["【解密】退款黑箱區", "戰區 J1 (卡頓流失)", "戰區 J2 (警戒點)", "戰區 J3 (競品共業)", "戰區 J4 (KYC流程死鎖)"]
         討論量 = [55, 71, 44, 61, 59]
         情緒 = [-0.852, -0.312, -0.661, -0.938, -0.78]
-        
     elif brand_name == "全支付":
         bait_text = "數據顯示高齡用戶在「換機與換門號」情境下遭遇極高數位門檻。這是導致線下門市癱瘓與 <b>資產凍結客訴</b> 的致命斷點。"
         labels = ["【解密】身份驗證死亡區", "戰區 P1 (換機阻力)", "戰區 P2 (跨境Timeout)", "戰區 P3 (競品共業)", "戰區 P4 (生態系整合點)"]
